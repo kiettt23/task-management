@@ -44,7 +44,15 @@ export const idParamValidator = [
 ];
 
 export const assignValidator = [
-  body("userId").custom(isObjectId).withMessage("Invalid userId"),
+  body("userId")
+    .custom((value) => {
+      return (
+        value === null ||
+        value === undefined ||
+        mongoose.Types.ObjectId.isValid(value)
+      );
+    })
+    .withMessage("Invalid userId"),
 ];
 
 export const updateStatusValidator = [
